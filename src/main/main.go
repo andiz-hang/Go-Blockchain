@@ -1,10 +1,13 @@
 package main
 
 import (
-	_ "fmt"
+	"fmt"
 	"blockchain"
 )
 
 func main() {
-	blockchain.BlockTest()
+	b := blockchain.Initial(16)
+	b.Mine(10)
+
+	fmt.Println(b.ValidHash())
 }

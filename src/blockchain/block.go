@@ -53,17 +53,12 @@ func (blk Block) CalcHash() []byte {
 	prf := blk.Proof
 
 	hashStr := fmt.Sprintf("%s:%d:%d:%s:%d", prevHashStr, gen, dif, data, prf)
-	// fmt.Println(hashStr)
 
 	hash := sha256.New()
 
 	hash.Write([]byte(hashStr))
 
 	return hash.Sum(nil)
-}
-
-func (b Block) printHash() {
-	fmt.Println(hex.EncodeToString(b.CalcHash()))
 }
 
 // Is this block's hash valid?
@@ -81,13 +76,13 @@ func (blk Block) ValidHash() bool {
 	nBytes := int(blk.Difficulty / 8)
 	nBits := blk.Difficulty % 8
 
-	for i := l-1; i >= l-nBytes; i-- {
+	for i := l - 1; i >= l-nBytes; i-- {
 		if hash[i] != '\x00' {
 			return false
 		}
 	}
 
-	if hash[l-nBytes-1] % (1<<nBits) != 0 {
+	if hash[l-nBytes-1]%(1<<nBits) != 0 {
 		return false
 	}
 
@@ -108,11 +103,4 @@ func (b *Block) FindProof() {
 
 	fmt.Println(i)
 
-}
-
-func BlockTest() {
-	b0 := Initial(16)
-	b0.FindProof()
-
-	b0.printHash()
 }
